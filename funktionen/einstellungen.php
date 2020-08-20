@@ -1,5 +1,5 @@
 <?php
-$sql = "SELECT {postmail}, {postalletage}, {postpapierkorbtage}, {emailaktiv}, {emailadresse}, {emailname}, {einganghost}, {eingangport}, {eingangnutzer}, {eingangpasswort}, {ausganghost}, {ausgangport}, {ausgangnutzer}, {ausgangpasswort} FROM postfach_nutzereinstellungen WHERE id = ?";
+$sql = "SELECT {postmail}, {postalletage}, {postpapierkorbtage}, {emailaktiv}, {emailadresse}, {emailname}, {einganghost}, {eingangport}, {eingangnutzer}, {eingangpasswort}, {ausganghost}, {ausgangport}, {ausgangnutzer}, {ausgangpasswort} FROM postfach_nutzereinstellungen WHERE person = ?";
 $anfrage = $DBS->anfrage($sql, "i", $profilid);
 $anfrage->werte($postmail, $posttage, $papierkorbtage, $mailaktiv, $mailadresse, $mailname, $mailehost, $maileport, $mailenutzer, $mailepasswort, $mailahost, $mailaport, $mailanutzer, $mailapasswort);
 
