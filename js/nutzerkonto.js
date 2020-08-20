@@ -1,5 +1,3 @@
-postfach.schulhof = {};
-
 postfach.schulhof.nutzerkonto = {
   aendern: {
     einstellungen: {
