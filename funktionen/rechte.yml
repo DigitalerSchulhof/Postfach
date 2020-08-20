@@ -1,6 +1,10 @@
-proto:
-  funktion:
-    _: Eine Sache
-    sehen: Sache sehen
-    ändern: Sache ändern
-    löschen: Sache löschen
+personen:
+  selbst:
+    profil:
+      einstellungen:
+        postfach: Einstellungen zum internen Postfach ändern
+        email: Einstellungen zum eMail-Postfach ändern
+  andere:
+    profil:
+      einstellungen:
+        postfach: Einstellungen zum internen Postfach ändern
