@@ -17,26 +17,26 @@ if (!$DSH_BENUTZER->hatRecht("$recht.einstellungen.email")) {
 
 if ($aktiv == "1") {
   if(!UI\Check::istMail($adresse)) {
-    Anfrage::addFehler(41);
+    Anfrage::addFehler(1);
   }
   if(!UI\Check::istText($name)) {
-    Anfrage::addFehler(42);
+    Anfrage::addFehler(2);
   }
   if(!UI\Check::istText($ehost)) {
-    Anfrage::addFehler(43);
+    Anfrage::addFehler(3);
   }
   if(!UI\Check::istZahl($eport,0,65535)) {
-    Anfrage::addFehler(44);
+    Anfrage::addFehler(4);
   }
   if(!UI\Check::istText($enutzer)) {
-    Anfrage::addFehler(45);
+    Anfrage::addFehler(5);
   }
 
   if(!UI\Check::istText($ahost)) {
-    Anfrage::addFehler(46);
+    Anfrage::addFehler(6);
   }
   if(!UI\Check::istZahl($aport,0,65535)) {
-    Anfrage::addFehler(47);
+    Anfrage::addFehler(7);
   }
 } else {
   $adresse = "";

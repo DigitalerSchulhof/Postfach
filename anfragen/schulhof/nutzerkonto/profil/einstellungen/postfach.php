@@ -16,10 +16,10 @@ if (!$DSH_BENUTZER->hatRecht("$recht.einstellungen.postfach")) {
 }
 
 if(!UI\Check::istZahl($postfach,1,1000)) {
-  Anfrage::addFehler(37);
+  Anfrage::addFehler(8);
 }
 if(!UI\Check::istZahl($papierkorb,1,1000)) {
-  Anfrage::addFehler(38);
+  Anfrage::addFehler(9);
 }
 
 Anfrage::checkFehler();

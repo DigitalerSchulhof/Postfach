@@ -1,3 +1,27 @@
-0:
-  ort: anfragen/ziel/null.php
-  beschreibung: Falscher <b>Zeitpunkt</b>
+1:
+  ort: anfragen/schulhof/nutzerkonto/profil/einstellungen/email.php
+  beschreibung: Die <b>eMail-Adresse</b> ist ungültig.
+2:
+  ort: anfragen/schulhof/nutzerkonto/profil/einstellungen/email.php
+  beschreibung: Der <b>Anzeigename</b> ist ungültig.
+3:
+  ort: anfragen/schulhof/nutzerkonto/profil/einstellungen/email.php
+  beschreibung: Der <b>IMAP-Host (Posteingang)</b> ist ungültig.
+4:
+  ort: anfragen/schulhof/nutzerkonto/profil/einstellungen/email.php
+  beschreibung: Der <b>IMAP-Port (Posteingang)</b> ist ungültig.
+5:
+  ort: anfragen/schulhof/nutzerkonto/profil/einstellungen/email.php
+  beschreibung: Der <b>Benutzername (Posteingang)</b> ist ungültig.
+6:
+  ort: anfragen/schulhof/nutzerkonto/profil/einstellungen/email.php
+  beschreibung: Der <b>SMTP-Host (Postausgang)</b> ist ungültig.
+7:
+  ort: anfragen/schulhof/nutzerkonto/profil/einstellungen/email.php
+  beschreibung: Der <b>SMTP-Port (Postausgang)</b> ist ungültig.
+8:
+  ort: anfragen/schulhof/nutzerkonto/profil/passwort.php
+  beschreibung: Das <b>alte Passwort</b> ist nicht korrekt.
+9:
+  ort: anfragen/schulhof/nutzerkonto/profil/einstellungen/nutzerkonto.php
+  beschreibung: Die Anzahl an <b>Elementen pro Übersicht</b> ist ungültig. Sie muss zwischen 1 und 10 betragen.
