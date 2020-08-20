@@ -1,3 +1,4 @@
 <?php
-$ZIELE[0] = "ziel/null.php";
+$ZIELE[1] = "schulhof/nutzerkonto/profil/einstellungen/postfach.php";
+$ZIELE[2] = "schulhof/nutzerkonto/profil/einstellungen/email.php";
 ?>
