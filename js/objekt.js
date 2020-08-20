@@ -1,1 +1,1 @@
-var proto = {};
+var postfach = {};
