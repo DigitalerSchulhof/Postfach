@@ -1,3 +1,5 @@
+postfach.schulhof = {};
+
 postfach.schulhof.nutzerkonto = {
   aendern: {
     einstellungen: {
@@ -5,7 +7,7 @@ postfach.schulhof.nutzerkonto = {
         var nachricht  = $("#dshProfil"+id+"Nachrichtenmails").getWert();
         var postfach   = $("#dshProfil"+id+"PostfachLoeschfrist").getWert();
         var papierkorb = $("#dshProfil"+id+"PapierkorbLoeschfrist").getWert();
-        core.ajax("Postfach", 1, "Postfacheinstellungen ändern", {id:id, nachricht:nachricht, postfach:postfach, papierkorb:papierkorb}, 0);
+        core.ajax("Postfach", 0, "Postfacheinstellungen ändern", {id:id, nachricht:nachricht, postfach:postfach, papierkorb:papierkorb}, 0);
       },
       email: (id) => {
         var aktiv     = $("#dshProfil"+id+"EmailAktiv").getWert();
@@ -19,7 +21,7 @@ postfach.schulhof.nutzerkonto = {
         var aport     = $("#dshProfil"+id+"EmailAusgangPort").getWert();
         var anutzer   = $("#dshProfil"+id+"EmailAusgangNutzer").getWert();
         var apasswort = $("#dshProfil"+id+"EmailAusgangPasswort").getWert();
-        core.ajax("Postfach", 2, "Profileinstellungen ändern", {id:id, aktiv:aktiv, adresse:adresse, name:name, ehost:ehost, eport:eport, enutzer:enutzer, epasswort:epasswort, ahost:ahost, aport:aport, anutzer:anutzer, apasswort:apasswort}, 13);
+        core.ajax("Postfach", 1, "Profileinstellungen ändern", {id:id, aktiv:aktiv, adresse:adresse, name:name, ehost:ehost, eport:eport, enutzer:enutzer, epasswort:epasswort, ahost:ahost, aport:aport, anutzer:anutzer, apasswort:apasswort}, 13);
       }
     }
   }
