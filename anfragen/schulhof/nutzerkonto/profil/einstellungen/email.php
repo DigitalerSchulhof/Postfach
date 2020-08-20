@@ -41,6 +41,7 @@ if ($aktiv == "1") {
 } else {
   $adresse = "";
   $name = "";
+  $ehost = "";
   $eport = "";
   $enutzer = "";
   $epasswort = "";

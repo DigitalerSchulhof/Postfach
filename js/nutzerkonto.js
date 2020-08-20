@@ -21,7 +21,7 @@ postfach.schulhof.nutzerkonto = {
         var aport     = $("#dshProfil"+id+"EmailAusgangPort").getWert();
         var anutzer   = $("#dshProfil"+id+"EmailAusgangNutzer").getWert();
         var apasswort = $("#dshProfil"+id+"EmailAusgangPasswort").getWert();
-        core.ajax("Postfach", 1, "Profileinstellungen ändern", {id:id, aktiv:aktiv, adresse:adresse, name:name, ehost:ehost, eport:eport, enutzer:enutzer, epasswort:epasswort, ahost:ahost, aport:aport, anutzer:anutzer, apasswort:apasswort}, 13);
+        core.ajax("Postfach", 1, "Profileinstellungen ändern", {id:id, aktiv:aktiv, adresse:adresse, name:name, ehost:ehost, eport:eport, enutzer:enutzer, epasswort:epasswort, ahost:ahost, aport:aport, anutzer:anutzer, apasswort:apasswort}, 1);
       }
     }
   }

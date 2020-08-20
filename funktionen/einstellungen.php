@@ -27,7 +27,7 @@ if ($DSH_BENUTZER->getId() == $profilid) {
   $formular[]       = $mailaktivF;
 
   $mailadresseF     = new UI\FormularFeld(new UI\InhaltElement("eMail-Adresse:"),             (new UI\Mailfeld("dshProfil{$profilid}EmailAdresse"))->setWert($mailadresse));
-  $mailnameF        = new UI\FormularFeld(new UI\InhaltElement("Anzeigename:"),               (new UI\Textfeld("dshProfil{$profilid}EmailName"))->setWert($mailname));
+  $mailnameF        = new UI\FormularFeld(new UI\InhaltElement("Angezeigter Name:"),               (new UI\Textfeld("dshProfil{$profilid}EmailName"))->setWert($mailname));
   $mailehostF       = new UI\FormularFeld(new UI\InhaltElement("IMAP-Host (Posteingang):"),   (new UI\Textfeld("dshProfil{$profilid}EmailEingangHost"))->setWert($mailehost));
   $maileportF       = new UI\FormularFeld(new UI\InhaltElement("IMAP-Port (Posteingang):"),   (new UI\Zahlenfeld("dshProfil{$profilid}EmailEingangPort",0,65535))->setWert($maileport));
   $mailenutzerF     = new UI\FormularFeld(new UI\InhaltElement("Benutzername (Posteingang):"),(new UI\Textfeld("dshProfil{$profilid}EmailEingangNutzer"))->setWert($mailenutzer));
