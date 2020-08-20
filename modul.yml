@@ -1,6 +1,6 @@
-name: Prototyp
-beschreibung: Ein Prototyp für Module
+name: Postfach
+beschreibung: Versenden und Empfangen von verschlüsselten internen Nachrichten. Anbinden eines eMail-Postfachs an den Digitalen Schulhof zur Übernahme von externen Mails in interne Nachrichten.
 lehrernetz: false
 autor: Digitaler Schulhof
 version: 0.1
-einstellungen: true
+einstellungen: false
