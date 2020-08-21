@@ -7,6 +7,7 @@ $sql = "CREATE TABLE postfach_nutzereinstellungen (
   postalletage varbinary(500) DEFAULT NULL,
   postpapierkorbtage varbinary(500) DEFAULT NULL,
   postspeicherplatz varbinary(500) DEFAULT NULL,
+  signatur blob DEFAULT NULL,
   emailaktiv varbinary(50) DEFAULT NULL,
   emailadresse varbinary(500) DEFAULT NULL,
   emailname varbinary(500) DEFAULT NULL,
@@ -21,17 +22,7 @@ $sql = "CREATE TABLE postfach_nutzereinstellungen (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 $DBS->anfrage($sql);
 
-$sql = "CREATE TABLE postfach_signaturen (
-  person bigint(255) UNSIGNED NOT NULL,
-  signatur blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-$DBS->anfrage($sql);
-
 $sql = "ALTER TABLE postfach_nutzereinstellungen
-ADD PRIMARY KEY (person);";
-$DBS->anfrage($sql);
-
-$sql = "ALTER TABLE postfach_signaturen
 ADD PRIMARY KEY (person);";
 $DBS->anfrage($sql);
 
@@ -168,10 +159,7 @@ while ($anfrage->werte($pid)) {
   ADD CONSTRAINT tagposttaggedentwurf_{$pid} FOREIGN KEY (tag) REFERENCES postfach_{$pid}_posttags (id) ON DELETE CASCADE ON UPDATE CASCADE;";
   $DBP->anfrage($sql);
 
-  $sql = "INSERT INTO postfach_nutzereinstellungen (person, postmail, postalletage, postpapierkorbtage, postspeicherplatz, emailaktiv, emailadresse, emailname, einganghost, eingangport, eingangnutzer, eingangpasswort, ausganghost, ausgangport, ausgangnutzer, ausgangpasswort) VALUES (?, ['1'], ['365'], ['30'], ['100'], ['0'], [''], [''], [''], [''], [''], [''], [''], [''], [''], ['']);";
-  $DBS->anfrage($sql, "i", $pid);
-
-  $sql = "INSERT INTO postfach_signaturen (person, signatur) VALUES (?, [''])";
+  $sql = "INSERT INTO postfach_nutzereinstellungen (person, postmail, postalletage, postpapierkorbtage, postspeicherplatz, postsignatur, emailaktiv, emailadresse, emailname, einganghost, eingangport, eingangnutzer, eingangpasswort, ausganghost, ausgangport, ausgangnutzer, ausgangpasswort) VALUES (?, ['1'], ['365'], ['30'], ['100'], ['0'], [''], [''], [''], [''], [''], [''], [''], [''], [''], [''], ['']);";
   $DBS->anfrage($sql, "i", $pid);
 
   // Ordner für das Personenpostfach anlegen

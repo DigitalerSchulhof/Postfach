@@ -2,9 +2,6 @@
 $sql = "DROP TABLE postfach_nutzereinstellungen;";
 $DBP->anfrage($sql);
 
-$sql = "DROP TABLE postfach_signaturen;";
-$DBP->anfrage($sql);
-
 
 // Tabellen für Personen entfernen
 $anfrage = $DBS->anfrage("SELECT id FROM kern_personen");

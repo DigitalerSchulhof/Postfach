@@ -1,5 +1,5 @@
 <?php
-Anfrage::post("id", "nachricht", "postfach", "papierkorb", "speicherplatz");
+Anfrage::post("id", "nachricht", "postfach", "papierkorb", "speicherplatz", "signatur");
 
 if(!Kern\Check::angemeldet()) {
   Anfrage::addFehler(-2, true);
@@ -28,11 +28,11 @@ if(!UI\Check::istZahl($speicherplatz,10,5000)) {
 Anfrage::checkFehler();
 
 if (!$DSH_BENUTZER->hatRecht("personen.andere.profil.einstellungen.speicherplatz")) {
-  $sql = "UPDATE postfach_nutzereinstellungen SET postmail = [?], postalletage = [?], postpapierkorbtage = [?] WHERE person = ?";
-  $anfrage = $DBS->anfrage($sql, "sssi", $nachricht, $postfach, $papierkorb, $id);
+  $sql = "UPDATE postfach_nutzereinstellungen SET postmail = [?], postalletage = [?], postpapierkorbtage = [?], signatur = [?] WHERE person = ?";
+  $anfrage = $DBS->anfrage($sql, "ssssi", $nachricht, $postfach, $papierkorb, $signatur, $id);
 } else {
-  $sql = "UPDATE postfach_nutzereinstellungen SET postmail = [?], postalletage = [?], postpapierkorbtage = [?], postspeicherplatz = [?] WHERE person = ?";
-  $anfrage = $DBS->anfrage($sql, "ssssi", $nachricht, $postfach, $papierkorb, $speicherplatz, $id);
+  $sql = "UPDATE postfach_nutzereinstellungen SET postmail = [?], postalletage = [?], postpapierkorbtage = [?], postspeicherplatz = [?], signatur = [?] WHERE person = ?";
+  $anfrage = $DBS->anfrage($sql, "sssssi", $nachricht, $postfach, $papierkorb, $speicherplatz, $signatur, $id);
 }
 
 ?>

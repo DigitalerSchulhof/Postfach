@@ -1,5 +1,5 @@
 <?php
-namespace Proto;
+namespace Postfach;
 
 class Check {
   /**

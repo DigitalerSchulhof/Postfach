@@ -7,19 +7,8 @@ $reiterspalte = new UI\Spalte("A1");
 
 if ($DSH_BENUTZER->hatRecht("$recht.einstellungen.postfach")) {
   $reiterspalte[]   = new UI\Ueberschrift(3, "Internes Postfach");
-  $formular         = new UI\FormularTabelle();
-  $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Nachrichten:"),          (new UI\IconToggle("dshProfil{$profilid}Nachrichtenmails", "Ich möchte eine eMail-Benachrichtugung erhalten, wenn ich eine Nachricht im Postfach erhalte.", new UI\Icon(UI\Konstanten::HAKEN)))->setWert($postmail));
-  $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Löschfrist Postfach (Tage):"),          (new UI\Zahlenfeld("dshProfil{$profilid}PostfachLoeschfrist", 1, 1000))->setWert($posttage));
-  $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Löschfrist Papierkorb (Tage):"),        (new UI\Zahlenfeld("dshProfil{$profilid}PapierkorbLoeschfrist", 1, 1000))->setWert($papierkorbtage));
-  $speicherplatzF = (new UI\Zahlenfeld("dshProfil{$profilid}PostfachSpeicherplatz", 10, 5000))->setWert($postspeicherplatz);
-  if (!$DSH_BENUTZER->hatRecht("personen.andere.profil.einstellungen.speicherplatz")) {
-    $speicherplatzF->setAttribut("disabled");
-  }
-  $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Speicherplatz (MB):"), $speicherplatzF);
-
-  $formular[]       = (new UI\Knopf("Änderungen speichern", "Erfolg"))  ->setSubmit(true);
-  $formular         ->addSubmit("postfach.schulhof.nutzerkonto.aendern.einstellungen.postfach('{$profilid}')");
-  $reiterspalte[]   = $formular;
+  $postfach = new Postfach\Postfach($profilid);
+  $reiterspalte[]   = $postfach->getPostfacheinstellungen();
 }
 if ($DSH_BENUTZER->getId() == $profilid) {
   $reiterspalte[]   = new UI\Ueberschrift(3, "eMail-Postfach");

@@ -6,7 +6,8 @@ postfach.schulhof.nutzerkonto = {
         var postfach   = $("#dshProfil"+id+"PostfachLoeschfrist").getWert();
         var papierkorb = $("#dshProfil"+id+"PapierkorbLoeschfrist").getWert();
         var speicherplatz = $("#dshProfil"+id+"PostfachSpeicherplatz").getWert();
-        core.ajax("Postfach", 0, "Postfacheinstellungen ändern", {id:id, nachricht:nachricht, postfach:postfach, papierkorb:papierkorb, speicherplatz:speicherplatz}, 0);
+        var signatur = $("#dshProfil"+id+"PostfachSignatur").getWert();
+        core.ajax("Postfach", 0, "Postfacheinstellungen ändern", {id:id, nachricht:nachricht, postfach:postfach, papierkorb:papierkorb, speicherplatz:speicherplatz, signatur:signatur}, 0);
       },
       email: (id) => {
         var aktiv     = $("#dshProfil"+id+"EmailAktiv").getWert();

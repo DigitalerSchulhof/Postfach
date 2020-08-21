@@ -29,7 +29,4 @@ if (is_dir("$ROOT/dateien/personen/$PERSONID/Postfach")) {
 $sql = "DELETE FROM postfach_nutzereinstellungen WHERE person = ?";
 $DBS->anfrage($sql, "i", $PERSONID);
 
-$sql = "DELETE FROM postfach_signaturen WHERE person = ?";
-$DBS->anfrage($sql, "i", $PERSONID);
-
 ?>

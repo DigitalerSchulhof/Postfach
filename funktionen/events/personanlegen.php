@@ -121,10 +121,7 @@ ADD CONSTRAINT nachrichtposttaggedentwurf_{$PERSONID} FOREIGN KEY (nachricht) RE
 ADD CONSTRAINT tagposttaggedentwurf_{$PERSONID} FOREIGN KEY (tag) REFERENCES postfach_{$PERSONID}_posttags (id) ON DELETE CASCADE ON UPDATE CASCADE;";
 $DBP->anfrage($sql);
 
-$sql = "INSERT INTO postfach_nutzereinstellungen (person, postmail, postalletage, postpapierkorbtage, emailaktiv, emailadresse, emailname, einganghost, eingangport, eingangnutzer, eingangpasswort, ausganghost, ausgangport, ausgangnutzer, ausgangpasswort) VALUES (?, ['1'], ['365'], ['30'], ['0'], [''], [''], [''], [''], [''], [''], [''], [''], [''], ['']);";
-$DBS->anfrage($sql, "i", $PERSONID);
-
-$sql = "INSERT INTO postfach_signaturen (person, signatur) VALUES (?, [''])";
+$sql = "INSERT INTO postfach_nutzereinstellungen (person, postmail, postalletage, postpapierkorbtage, signatur, emailaktiv, emailadresse, emailname, einganghost, eingangport, eingangnutzer, eingangpasswort, ausganghost, ausgangport, ausgangnutzer, ausgangpasswort) VALUES (?, ['1'], ['365'], ['30'], ['0'], [''], [''], [''], [''], [''], [''], [''], [''], [''], [''], ['']);";
 $DBS->anfrage($sql, "i", $PERSONID);
 
 
