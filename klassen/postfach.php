@@ -91,7 +91,7 @@ class Postfach {
    * Posftacheinstellungen laden
    * @return UI\Formular Formular für die Postfacheinstellungen
    */
-  public function getPostfacheinstellungen() : UI\Formular {
+  public function getPostfacheinstellungen() : UI\FormularTabelle {
     global $DSH_BENUTZER;
     $formular         = new UI\FormularTabelle();
     $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Nachrichten:"),          (new UI\IconToggle("dshProfil{$this->person}Nachrichtenmails", "Ich möchte eine eMail-Benachrichtugung erhalten, wenn ich eine Nachricht im Postfach erhalte.", new UI\Icon(UI\Konstanten::HAKEN)))->setWert($this->benachrichtigung));
@@ -113,6 +113,7 @@ class Postfach {
     $spalten = [["{gelesen} AS gelesen", "{beantwortet} AS beantwortet"], ["{nachname} AS nachname", "{vorname} AS vorname", "{titel} AS titel"], ["{betreff} AS betreff"], ["zeit"], ["{archiviert} as archiviert"]];
     $sql = "SELECT ?? FROM postfach_{$this->person}_posteingang WHERE papierkorb = {'-'}";
     $tanfrage = new Kern\Tabellenanfrage($sql, $spalten, 1, 25, 4);
+    return "";
   }
 
   /**
