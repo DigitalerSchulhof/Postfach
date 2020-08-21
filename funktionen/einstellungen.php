@@ -35,7 +35,7 @@ if ($DSH_BENUTZER->getId() == $profilid) {
   $mailepasswortF   ->setOptional(true);
   $mailahostF       = new UI\FormularFeld(new UI\InhaltElement("SMTP-Host (Postausgang):"),   (new UI\Textfeld("dshProfil{$profilid}EmailAusgangHost"))->setWert($mailahost));
   $mailaportF       = new UI\FormularFeld(new UI\InhaltElement("SMTP-Port (Postausgang):"),   (new UI\Zahlenfeld("dshProfil{$profilid}EmailAusgangPort",0,65535))->setWert($mailaport));
-  $mailanutzerF     = new UI\FormularFeld(new UI\InhaltElement("Benutzername (Posteingang):"),(new UI\Textfeld("dshProfil{$profilid}EmailEingangNutzer"))->setWert($mailanutzer));
+  $mailanutzerF     = new UI\FormularFeld(new UI\InhaltElement("Benutzername (Posteingang):"),(new UI\Textfeld("dshProfil{$profilid}EmailAusgangNutzer"))->setWert($mailanutzer));
   $mailanutzerF     ->setOptional(true);
   $mailapasswortF   = new UI\FormularFeld(new UI\InhaltElement("Passwort (Postausgang):"),    (new UI\Passwortfeld("dshProfil{$profilid}EmailAusgangPasswort"))->setWert($mailapasswort));
   $mailapasswortF   ->setOptional(true);
