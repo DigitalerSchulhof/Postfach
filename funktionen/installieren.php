@@ -125,7 +125,7 @@ while ($anfrage->werte($pid)) {
   ADD CONSTRAINT tagposttaggedentwurf_{$pid} FOREIGN KEY (tag) REFERENCES posttags_{$pid} (id) ON DELETE CASCADE ON UPDATE CASCADE;";
   $DBP->anfrage($sql);
 
-  $sql = "INSERT INTO postfach_personen_signaturen (person, signatur) VALUES (?, AES_ENCRYPT('', '$CMS_SCHLUESSEL'))";
+  $sql = "INSERT INTO postfach_personen_signaturen (person, signatur) VALUES (?, {''})";
   $DBS->anfrage($sql, "i", $pid);
 
 
