@@ -1,7 +1,7 @@
 <?php
-$sql = "SELECT {postmail}, {postalletage}, {postpapierkorbtage}, {emailaktiv}, {emailadresse}, {emailname}, {einganghost}, {eingangport}, {eingangnutzer}, {eingangpasswort}, {ausganghost}, {ausgangport}, {ausgangnutzer}, {ausgangpasswort} FROM postfach_nutzereinstellungen WHERE person = ?";
+$sql = "SELECT {postmail}, {postalletage}, {postpapierkorbtage}, {postspeicherplatz}, {emailaktiv}, {emailadresse}, {emailname}, {einganghost}, {eingangport}, {eingangnutzer}, {eingangpasswort}, {ausganghost}, {ausgangport}, {ausgangnutzer}, {ausgangpasswort} FROM postfach_nutzereinstellungen WHERE person = ?";
 $anfrage = $DBS->anfrage($sql, "i", $profilid);
-$anfrage->werte($postmail, $posttage, $papierkorbtage, $mailaktiv, $mailadresse, $mailname, $mailehost, $maileport, $mailenutzer, $mailepasswort, $mailahost, $mailaport, $mailanutzer, $mailapasswort);
+$anfrage->werte($postmail, $posttage, $papierkorbtage, $postspeicherplatz, $mailaktiv, $mailadresse, $mailname, $mailehost, $maileport, $mailenutzer, $mailepasswort, $mailahost, $mailaport, $mailanutzer, $mailapasswort);
 
 $reiterspalte = new UI\Spalte("A1");
 
@@ -11,6 +11,11 @@ if ($DSH_BENUTZER->hatRecht("$recht.einstellungen.postfach")) {
   $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Nachrichten:"),          (new UI\IconToggle("dshProfil{$profilid}Nachrichtenmails", "Ich möchte eine eMail-Benachrichtugung erhalten, wenn ich eine Nachricht im Postfach erhalte.", new UI\Icon(UI\Konstanten::HAKEN)))->setWert($postmail));
   $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Löschfrist Postfach (Tage):"),          (new UI\Zahlenfeld("dshProfil{$profilid}PostfachLoeschfrist", 1, 1000))->setWert($posttage));
   $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Löschfrist Papierkorb (Tage):"),        (new UI\Zahlenfeld("dshProfil{$profilid}PapierkorbLoeschfrist", 1, 1000))->setWert($papierkorbtage));
+  $speicherplatzF = (new UI\Zahlenfeld("dshProfil{$profilid}PostfachSpeicherplatz", 10, 5000))->setWert($postspeicherplatz);
+  if (!$DSH_BENUTZER->hatRecht("personen.andere.profil.einstellungen.speicherplatz")) {
+    $speicherplatzF->setAttribut("disabled");
+  }
+  $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Speicherplatz (MB):"), $speicherplatzF);
 
   $formular[]       = (new UI\Knopf("Änderungen speichern", "Erfolg"))  ->setSubmit(true);
   $formular         ->addSubmit("postfach.schulhof.nutzerkonto.aendern.einstellungen.postfach('{$profilid}')");

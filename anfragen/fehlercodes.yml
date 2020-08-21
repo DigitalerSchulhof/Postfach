@@ -25,3 +25,6 @@
 9:
   ort: anfragen/schulhof/nutzerkonto/profil/einstellungen/nutzerkonto.php
   beschreibung: Die Anzahl an <b>Elementen pro Übersicht</b> ist ungültig. Sie muss zwischen 1 und 10 betragen.
+10:
+  ort: anfragen/schulhof/nutzerkonto/profil/einstellungen/nutzerkonto.php
+  beschreibung: Der <b>Speicherplatz (MB)</b> ist ungültig. Er muss zwischen 10 und 5000 betragen.
