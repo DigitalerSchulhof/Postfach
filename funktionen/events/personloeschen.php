@@ -1,30 +1,35 @@
 <?php
-$sql = "DROP TABLE postfach_postausgang_{$PERSONID};";
+$sql = "DROP TABLE postfach_{$PERSONID}_postausgang;";
 $DBP->anfrage($sql);
 
-$sql = "DROP TABLE postfach_posteingang_{$PERSONID};";
+$sql = "DROP TABLE postfach_{$PERSONID}_posteingang";
 $DBP->anfrage($sql);
 
-$sql = "DROP TABLE postfach_postentwurf_{$PERSONID};";
+$sql = "DROP TABLE postfach_{$PERSONID}_postentwurf;";
 $DBP->anfrage($sql);
 
-$sql = "DROP TABLE postfach_postgetaggedausgang_{$PERSONID}";
+$sql = "DROP TABLE postfach_{$PERSONID}_postgetaggedausgang;";
 $DBP->anfrage($sql);
 
-$sql = "DROP TABLE postfach_postgetaggedeingang_{$PERSONID};";
+$sql = "DROP TABLE postfach_{$PERSONID}_postgetaggedeingang;";
 $DBP->anfrage($sql);
 
-$sql = "DROP TABLE postfach_postgetaggedentwurf_{$PERSONID};";
+$sql = "DROP TABLE postfach_{$PERSONID}_postgetaggedentwurf;";
 $DBP->anfrage($sql);
 
-$sql = "DROP TABLE postfach_posttags_{$PERSONID};";
+$sql = "DROP TABLE postfach_{$PERSONID}_posttags;";
 $DBP->anfrage($sql);
 
-$sql = "DELETE FROM postfach_personen_signaturen WHERE person = ?";
-$DBS->anfrage($sql, "i", $PERSONID);
 
 // Ordner für das Personenpostfach anlegen
 if (is_dir("$ROOT/dateien/personen/$PERSONID/Postfach")) {
   Kern\Dateisystem::ordnerLoeschen("$ROOT/dateien/personen/$PERSONID/Postfach");
 }
+
+$sql = "DELETE FROM postfach_nutzereinstellungen WHERE person = ?";
+$DBS->anfrage($sql, "i", $PERSONID);
+
+$sql = "DELETE FROM postfach_signaturen WHERE person = ?";
+$DBS->anfrage($sql, "i", $PERSONID);
+
 ?>
