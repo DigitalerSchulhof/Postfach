@@ -4,3 +4,6 @@ lehrernetz: false
 autor: Digitaler Schulhof
 version: 0.1
 einstellungen: false
+datenbanken:
+  - schulhof
+  - personen
