@@ -21,7 +21,7 @@ $reiterspalte = new UI\Spalte("A1", $reiterinhalt);
 $reiterkoerper = new UI\Reiterkoerper($reiterspalte->addKlasse("dshUiOhnePadding"));
 $reiter->addReitersegment(new UI\Reitersegment($reiterkopf, $reiterkoerper));
 
-$reiterkopf = new UI\Reiterkopf(new UI\Icon("fas fa-pencil-ruler")." Entwürfe ".(new UI\Meldezahl($anzahlen['ent'])));
+$reiterkopf = new UI\Reiterkopf(new UI\Icon("fas fa-drafting-compass")." Entwürfe ".(new UI\Meldezahl($anzahlen['ent'])));
 $reiterinhalt = "";
 $reiterspalte = new UI\Spalte("A1", $reiterinhalt);
 $reiterkoerper = new UI\Reiterkoerper($reiterspalte->addKlasse("dshUiOhnePadding"));
