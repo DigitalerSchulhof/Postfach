@@ -1,31 +1,31 @@
 <?php
 $sql = "DROP TABLE postfach_nutzereinstellungen;";
-$DBP->anfrage($sql);
+$DBS->anfrage($sql);
 
 
 // Tabellen für Personen entfernen
 $anfrage = $DBS->anfrage("SELECT id FROM kern_personen");
 while ($anfrage->werte($pid)) {
   $sql = "DROP TABLE postfach_{$pid}_postausgang;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "DROP TABLE postfach_{$pid}_posteingang";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "DROP TABLE postfach_{$pid}_postentwurf;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "DROP TABLE postfach_{$pid}_postgetaggedausgang;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "DROP TABLE postfach_{$pid}_postgetaggedeingang;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "DROP TABLE postfach_{$pid}_postgetaggedentwurf;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "DROP TABLE postfach_{$pid}_posttags;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
 
   // Ordner für das Personenpostfach anlegen

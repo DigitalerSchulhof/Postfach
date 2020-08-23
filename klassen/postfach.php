@@ -30,12 +30,12 @@ class Postfach {
    * @return UI\Balken Balken, der anzeigt, wie voll das Postfach ist
    */
   public function getBelegt() : UI\Balken {
-    global $ROOT, $DBP;
+    global $ROOT;
     // Dateisystem Größe ermitteln
     $info = Kern\Dateisystem::ordnerInfo("$ROOT/dateien/personen/{$this->person}/Postfach");
     $belegt = $info["groesse"];
     // Datenbankgröße ermitteln
-    $belegt += Kern\Dateisystem::tabellenGroesse($DBP, $this->profilTabellen());
+    $belegt += Kern\Dateisystem::tabellenGroesse($DBS, $this->profilTabellen());
     return new UI\Balken("Speicher", $belegt, $this->speicherplatz*1000*1000);
   }
 
@@ -44,7 +44,6 @@ class Postfach {
    * @return array Anzahl Nachrichten der einzelnen Bereiche
    */
   public function getStatus() {
-    global $DBP;
     $eingang['-'] = 0;
 		$eingang[1] = 0;
     $zahlen['ein'] = 0;
@@ -52,7 +51,7 @@ class Postfach {
     $zahlen['ent'] = 0;
     $zahlen['pap'] = 0;
     $sql = "SELECT [gelesen], COUNT(gelesen) FROM postfach_{$this->person}_posteingang WHERE papierkorb = {?} GROUP BY gelesen";
-    $anfrage = $DBP->anfrage($sql, "s", "-");
+    $anfrage = $DBS->anfrage($sql, "s", "-");
     while ($anfrage->werte($status, $anzahl)) {
       $eingang[$status] = $anzahl;
       $zahlen['ein'] += $anzahl;
@@ -62,25 +61,25 @@ class Postfach {
     }
 
     $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_postausgang WHERE papierkorb = {?}";
-    $anfrage = $DBP->anfrage($sql, "s", "-");
+    $anfrage = $DBS->anfrage($sql, "s", "-");
     $anfrage->werte($zahlen['aus']);
 
     $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_postentwurf WHERE papierkorb = {?}";
-    $anfrage = $DBP->anfrage($sql, "s", "-");
+    $anfrage = $DBS->anfrage($sql, "s", "-");
     $anfrage->werte($zahlen['ent']);
 
     $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_posteingang WHERE papierkorb = {?}";
-    $anfrage = $DBP->anfrage($sql, "s", "1");
+    $anfrage = $DBS->anfrage($sql, "s", "1");
     $anfrage->werte($zahl);
     $zahlen['pap'] += $zahl;
 
     $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_postausgang WHERE papierkorb = {?}";
-    $anfrage = $DBP->anfrage($sql, "s", "1");
+    $anfrage = $DBS->anfrage($sql, "s", "1");
     $anfrage->werte($zahl);
     $zahlen['pap'] += $zahl;
 
     $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_postentwurf WHERE papierkorb = {?}";
-    $anfrage = $DBP->anfrage($sql, "s", "1");
+    $anfrage = $DBS->anfrage($sql, "s", "1");
     $anfrage->werte($zahl);
     $zahlen['pap'] += $zahl;
 

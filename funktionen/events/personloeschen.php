@@ -1,24 +1,24 @@
 <?php
 $sql = "DROP TABLE postfach_{$PERSONID}_postausgang;";
-$DBP->anfrage($sql);
+$DBS->anfrage($sql);
 
 $sql = "DROP TABLE postfach_{$PERSONID}_posteingang";
-$DBP->anfrage($sql);
+$DBS->anfrage($sql);
 
 $sql = "DROP TABLE postfach_{$PERSONID}_postentwurf;";
-$DBP->anfrage($sql);
+$DBS->anfrage($sql);
 
 $sql = "DROP TABLE postfach_{$PERSONID}_postgetaggedausgang;";
-$DBP->anfrage($sql);
+$DBS->anfrage($sql);
 
 $sql = "DROP TABLE postfach_{$PERSONID}_postgetaggedeingang;";
-$DBP->anfrage($sql);
+$DBS->anfrage($sql);
 
 $sql = "DROP TABLE postfach_{$PERSONID}_postgetaggedentwurf;";
-$DBP->anfrage($sql);
+$DBS->anfrage($sql);
 
 $sql = "DROP TABLE postfach_{$PERSONID}_posttags;";
-$DBP->anfrage($sql);
+$DBS->anfrage($sql);
 
 
 // Ordner für das Personenpostfach anlegen

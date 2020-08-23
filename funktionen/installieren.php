@@ -50,7 +50,7 @@ while ($anfrage->werte($pid)) {
   	idvon bigint(255) UNSIGNED DEFAULT NULL,
   	idzeit bigint(255) UNSIGNED DEFAULT NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "CREATE TABLE postfach_{$pid}_posteingang (
   	id bigint(255) UNSIGNED NOT NULL,
@@ -68,7 +68,7 @@ while ($anfrage->werte($pid)) {
   	idvon bigint(255) UNSIGNED DEFAULT NULL,
   	idzeit bigint(255) UNSIGNED DEFAULT NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "CREATE TABLE postfach_{$pid}_postentwurf (
   	id bigint(255) UNSIGNED NOT NULL,
@@ -83,25 +83,25 @@ while ($anfrage->werte($pid)) {
   	idvon bigint(255) UNSIGNED DEFAULT NULL,
   	idzeit bigint(255) UNSIGNED DEFAULT NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "CREATE TABLE postfach_{$pid}_postgetaggedausgang (
   	tag bigint(255) UNSIGNED NOT NULL,
   	nachricht bigint(255) UNSIGNED NOT NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "CREATE TABLE postfach_{$pid}_postgetaggedeingang (
   	tag bigint(255) UNSIGNED NOT NULL,
   	nachricht bigint(255) UNSIGNED NOT NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "CREATE TABLE postfach_{$pid}_postgetaggedentwurf (
   	tag bigint(255) UNSIGNED NOT NULL,
   	nachricht bigint(255) UNSIGNED NOT NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "CREATE TABLE postfach_{$pid}_posttags (
   	id bigint(255) UNSIGNED NOT NULL,
@@ -111,53 +111,53 @@ while ($anfrage->werte($pid)) {
   	idvon bigint(255) UNSIGNED DEFAULT NULL,
   	idzeit bigint(255) UNSIGNED DEFAULT NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "ALTER TABLE postfach_{$pid}_postausgang
   ADD PRIMARY KEY (id);";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "ALTER TABLE postfach_{$pid}_posteingang
   ADD PRIMARY KEY (id);";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "ALTER TABLE postfach_{$pid}_postentwurf
   ADD PRIMARY KEY (id);";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "ALTER TABLE postfach_{$pid}_postgetaggedausgang
   ADD UNIQUE KEY tag (tag,nachricht),
   ADD KEY nachrichtposttaggedausgang_{$pid} (nachricht);";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "ALTER TABLE postfach_{$pid}_postgetaggedeingang
   ADD UNIQUE KEY tag (tag,nachricht),
   ADD KEY nachrichtposttaggedeingang_{$pid} (nachricht);";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "ALTER TABLE postfach_{$pid}_postgetaggedentwurf
   ADD UNIQUE KEY tag (tag,nachricht),
   ADD KEY nachrichtposttaggedentwurf_{$pid} (nachricht);";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "ALTER TABLE postfach_{$pid}_posttags
   ADD PRIMARY KEY (id);";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "ALTER TABLE postfach_{$pid}_postgetaggedausgang
   ADD CONSTRAINT nachrichtposttaggedausgang_{$pid} FOREIGN KEY (nachricht) REFERENCES postfach_{$pid}_postausgang (id) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT tagposttaggedausgang_{$pid} FOREIGN KEY (tag) REFERENCES postfach_{$pid}_posttags (id) ON DELETE CASCADE ON UPDATE CASCADE;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "ALTER TABLE postfach_{$pid}_postgetaggedeingang_{$pid}
   ADD CONSTRAINT nachrichtposttaggedeingang_{$pid} FOREIGN KEY (nachricht) REFERENCES postfach_{$pid}_posteingang (id) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT tagposttaggedeingang_{$pid} FOREIGN KEY (tag) REFERENCES postfach_{$pid}_posttags (id) ON DELETE CASCADE ON UPDATE CASCADE;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "ALTER TABLE postfach_{$pid}_postgetaggedentwurf_{$pid}
   ADD CONSTRAINT nachrichtposttaggedentwurf_{$pid} FOREIGN KEY (nachricht) REFERENCES postfach_{$pid}_postentwurf (id) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT tagposttaggedentwurf_{$pid} FOREIGN KEY (tag) REFERENCES postfach_{$pid}_posttags (id) ON DELETE CASCADE ON UPDATE CASCADE;";
-  $DBP->anfrage($sql);
+  $DBS->anfrage($sql);
 
   $sql = "INSERT INTO postfach_nutzereinstellungen (person, postmail, postalletage, postpapierkorbtage, postspeicherplatz, postsignatur, emailaktiv, emailadresse, emailname, einganghost, eingangport, eingangnutzer, eingangpasswort, ausganghost, ausgangport, ausgangnutzer, ausgangpasswort) VALUES (?, ['1'], ['365'], ['30'], ['100'], ['0'], [''], [''], [''], [''], [''], [''], [''], [''], [''], [''], ['']);";
   $DBS->anfrage($sql, "i", $pid);
