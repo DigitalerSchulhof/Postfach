@@ -72,8 +72,8 @@ if ($DSH_BENUTZER->getId() == $profilid) {
   $formular         ->addSubmit("postfach.schulhof.nutzerkonto.aendern.einstellungen.email('{$profilid}')");
   $reiterspalte[]   = $formular;
 }
-$reiterkopf = new UI\Reiterkopf("Postfach");
-$reiterkoerper = new UI\Reiterkoerper($reiterspalte->addKlasse("dshUiOhnePadding"));
+$reiterkopf     = new UI\Reiterkopf("Postfach", new UI\Icon("fas fa-envelope"));
+$reiterkoerper  = new UI\Reiterkoerper($reiterspalte->addKlasse("dshUiOhnePadding"));
 
 return [new UI\Reitersegment($reiterkopf, $reiterkoerper)];
 ?>
