@@ -10,13 +10,12 @@ $anzahlen = $postfach->getStatus();
 
 $reiter = new UI\Reiter("dshPostfach");
 
-$reiterkopf     = new UI\Reiterkopf("Posteingang", new UI\Icon("fas fa-inbox-in"), $anzahlen['ein']);
-$reiterinhalt   = $postfach->getPosteingang();
-$reiterspalte   = new UI\Spalte("A1", $reiterinhalt);
+$reiterkopf     = new UI\Reiterkopf("Posteingang", new UI\Icon("fas fa-inbox"), $anzahlen['ein']);
+$reiterspalte   = new UI\Spalte("A1", $postfach->getEingangsfilter());
 $reiterkoerper  = new UI\Reiterkoerper($reiterspalte->addKlasse("dshUiOhnePadding"));
 $reiter[]       = new UI\Reitersegment($reiterkopf, $reiterkoerper);
 
-$reiterkopf     = new UI\Reiterkopf("Postausgang", new UI\Icon("fas fa-inbox-out"), $anzahlen['aus']);
+$reiterkopf     = new UI\Reiterkopf("Postausgang", new UI\Icon("fas fa-paper-plane"), $anzahlen['aus']);
 $reiterinhalt   = "";
 $reiterspalte   = new UI\Spalte("A1", $reiterinhalt);
 $reiterkoerper  = new UI\Reiterkoerper($reiterspalte->addKlasse("dshUiOhnePadding"));
@@ -34,6 +33,20 @@ $reiterinhalt   = "";
 $reiterspalte   = new UI\Spalte("A1", $reiterinhalt);
 $reiterkoerper  = new UI\Reiterkoerper($reiterspalte->addKlasse("dshUiOhnePadding"));
 $reiter[]       = new UI\Reitersegment($reiterkopf, $reiterkoerper);
+
+
+
+
+$reiterkopf     = new UI\Reiterkopf("Tags", new UI\Icon("fas fa-tags"));
+$reiterinhalt   = $postfach->getTags(true);
+$knopf          = new UI\IconKnopf(new UI\Icon(UI\Konstanten::NEU), "Neuen Tag anlegen", "Erfolg");
+$knopf          ->addFunktion("onclick", "postfach.tags.neu.laden()");
+$reiterinhalt  .= new UI\Absatz($knopf);
+$reiterspalte   = new UI\Spalte("A1", $reiterinhalt);
+$reiterkoerper  = new UI\Reiterkoerper($reiterspalte->addKlasse("dshUiOhnePadding"));
+$reiter[]       = new UI\Reitersegment($reiterkopf, $reiterkoerper);
+
+
 
 
 

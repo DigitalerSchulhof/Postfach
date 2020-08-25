@@ -1,7 +1,6 @@
 <?php
-$sql = "CREATE TABLE postfach_{$PERSONID}_postausgang (
+$sql = "CREATE TABLE postfach_{$PERSONID}_ausgang (
   id bigint(255) UNSIGNED NOT NULL,
-  absender bigint(255) UNSIGNED NULL DEFAULT NULL,
   empfaenger text COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   zeit bigint(255) UNSIGNED DEFAULT NULL,
   betreff varbinary(5000) DEFAULT NULL,
@@ -14,10 +13,9 @@ $sql = "CREATE TABLE postfach_{$PERSONID}_postausgang (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 $DBS->anfrage($sql);
 
-$sql = "CREATE TABLE postfach_{$PERSONID}_posteingang (
+$sql = "CREATE TABLE postfach_{$PERSONID}_eingang (
   id bigint(255) UNSIGNED NOT NULL,
   absender bigint(255) UNSIGNED NULL DEFAULT NULL,
-  empfaenger bigint(255) UNSIGNED NULL DEFAULT NULL,
   alle text COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   zeit bigint(255) UNSIGNED DEFAULT NULL,
   betreff varbinary(5000) DEFAULT NULL,
@@ -32,9 +30,8 @@ $sql = "CREATE TABLE postfach_{$PERSONID}_posteingang (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 $DBS->anfrage($sql);
 
-$sql = "CREATE TABLE postfach_{$PERSONID}_postentwurf (
+$sql = "CREATE TABLE postfach_{$PERSONID}_entwuerfe (
   id bigint(255) UNSIGNED NOT NULL,
-  absender bigint(255) UNSIGNED NULL DEFAULT NULL,
   empfaenger text COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   zeit bigint(255) UNSIGNED DEFAULT NULL,
   betreff varbinary(5000) DEFAULT NULL,
@@ -47,83 +44,81 @@ $sql = "CREATE TABLE postfach_{$PERSONID}_postentwurf (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 $DBS->anfrage($sql);
 
-$sql = "CREATE TABLE postfach_{$PERSONID}_postgetaggedausgang (
-  tag bigint(255) UNSIGNED NOT NULL,
-  nachricht bigint(255) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-$DBS->anfrage($sql);
-
-$sql = "CREATE TABLE postfach_{$PERSONID}_postgetaggedeingang (
-  tag bigint(255) UNSIGNED NOT NULL,
-  nachricht bigint(255) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-$DBS->anfrage($sql);
-
-$sql = "CREATE TABLE postfach_{$PERSONID}_postgetaggedentwurf (
-  tag bigint(255) UNSIGNED NOT NULL,
-  nachricht bigint(255) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-$DBS->anfrage($sql);
-
-$sql = "CREATE TABLE postfach_{$PERSONID}_posttags (
+$sql = "CREATE TABLE postfach_{$PERSONID}_tags (
   id bigint(255) UNSIGNED NOT NULL,
-  person bigint(255) UNSIGNED NULL DEFAULT NULL,
   titel varbinary(2000) DEFAULT NULL,
-  farbe int(2) NOT NULL DEFAULT 0,
+  farbe varbinary(500) DEFAULT NULL,
   idvon bigint(255) UNSIGNED DEFAULT NULL,
   idzeit bigint(255) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 $DBS->anfrage($sql);
 
-$sql = "ALTER TABLE postfach_{$PERSONID}_postausgang
+$sql = "CREATE TABLE postfach_{$PERSONID}_getaggedausgang (
+  tag bigint(255) UNSIGNED NOT NULL,
+  nachricht bigint(255) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+$DBS->anfrage($sql);
+
+$sql = "CREATE TABLE postfach_{$PERSONID}_getaggedeingang (
+  tag bigint(255) UNSIGNED NOT NULL,
+  nachricht bigint(255) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+$DBS->anfrage($sql);
+
+$sql = "CREATE TABLE postfach_{$PERSONID}_getaggedentwuerfe (
+  tag bigint(255) UNSIGNED NOT NULL,
+  nachricht bigint(255) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+$DBS->anfrage($sql);
+
+$sql = "ALTER TABLE postfach_{$PERSONID}_ausgang
 ADD PRIMARY KEY (id);";
 $DBS->anfrage($sql);
 
-$sql = "ALTER TABLE postfach_{$PERSONID}_posteingang
+$sql = "ALTER TABLE postfach_{$PERSONID}_eingang
 ADD PRIMARY KEY (id);";
 $DBS->anfrage($sql);
 
-$sql = "ALTER TABLE postfach_{$PERSONID}_postentwurf
+$sql = "ALTER TABLE postfach_{$PERSONID}_entwuerfe
 ADD PRIMARY KEY (id);";
 $DBS->anfrage($sql);
 
-$sql = "ALTER TABLE postfach_{$PERSONID}_postgetaggedausgang
+$sql = "ALTER TABLE postfach_{$PERSONID}_getaggedausgang
 ADD UNIQUE KEY tag (tag,nachricht),
-ADD KEY nachrichtposttaggedausgang_{$PERSONID} (nachricht);";
+ADD KEY nachrichtgetaggedausgang_{$PERSONID} (nachricht);";
 $DBS->anfrage($sql);
 
-$sql = "ALTER TABLE postfach_{$PERSONID}_postgetaggedeingang
+$sql = "ALTER TABLE postfach_{$PERSONID}_getaggedeingang
 ADD UNIQUE KEY tag (tag,nachricht),
-ADD KEY nachrichtposttaggedeingang_{$PERSONID} (nachricht);";
+ADD KEY nachrichtgetaggedeingang_{$PERSONID} (nachricht);";
 $DBS->anfrage($sql);
 
-$sql = "ALTER TABLE postfach_{$PERSONID}_postgetaggedentwurf
+$sql = "ALTER TABLE postfach_{$PERSONID}_getaggedentwuerfe
 ADD UNIQUE KEY tag (tag,nachricht),
-ADD KEY nachrichtposttaggedentwurf_{$PERSONID} (nachricht);";
+ADD KEY nachrichtgetaggedentwuerfe_{$PERSONID} (nachricht);";
 $DBS->anfrage($sql);
 
-$sql = "ALTER TABLE postfach_{$PERSONID}_posttags
+$sql = "ALTER TABLE postfach_{$PERSONID}_getaggedausgang
+ADD CONSTRAINT postfach_{$PERSONID}_getaggedausgang_nachricht FOREIGN KEY (nachricht) REFERENCES postfach_{$PERSONID}_ausgang (id) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT postfach_{$PERSONID}_getaggedausgang_tags FOREIGN KEY (tag) REFERENCES postfach_{$PERSONID}_tags (id) ON DELETE CASCADE ON UPDATE CASCADE;";
+$DBS->anfrage($sql);
+
+$sql = "ALTER TABLE postfach_{$PERSONID}_getaggedeingang
+ADD CONSTRAINT postfach_{$PERSONID}_getaggedeingang_nachricht FOREIGN KEY (nachricht) REFERENCES postfach_{$PERSONID}_eingang (id) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT postfach_{$PERSONID}_getaggedeingang_tags FOREIGN KEY (tag) REFERENCES postfach_{$PERSONID}_tags (id) ON DELETE CASCADE ON UPDATE CASCADE;";
+$DBS->anfrage($sql);
+
+$sql = "ALTER TABLE postfach_{$PERSONID}_getaggedentwuerfe
+ADD CONSTRAINT postfach_{$PERSONID}_getaggedentwuerfe_nachricht FOREIGN KEY (nachricht) REFERENCES postfach_{$PERSONID}_entwuerfe (id) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT postfach_{$PERSONID}_getaggedentwuerfe_tags FOREIGN KEY (tag) REFERENCES postfach_{$PERSONID}_tags (id) ON DELETE CASCADE ON UPDATE CASCADE;";
+$DBS->anfrage($sql);
+
+$sql = "ALTER TABLE postfach_{$PERSONID}_tags
 ADD PRIMARY KEY (id);";
 $DBS->anfrage($sql);
 
-$sql = "ALTER TABLE postfach_{$PERSONID}_postgetaggedausgang
-ADD CONSTRAINT nachrichtposttaggedausgang_{$PERSONID} FOREIGN KEY (nachricht) REFERENCES postfach_{$PERSONID}_postausgang (id) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT tagposttaggedausgang_{$PERSONID} FOREIGN KEY (tag) REFERENCES postfach_{$PERSONID}_posttags (id) ON DELETE CASCADE ON UPDATE CASCADE;";
-$DBS->anfrage($sql);
-
-$sql = "ALTER TABLE postfach_{$PERSONID}_postgetaggedeingang_{$PERSONID}
-ADD CONSTRAINT nachrichtposttaggedeingang_{$PERSONID} FOREIGN KEY (nachricht) REFERENCES postfach_{$PERSONID}_posteingang (id) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT tagposttaggedeingang_{$PERSONID} FOREIGN KEY (tag) REFERENCES postfach_{$PERSONID}_posttags (id) ON DELETE CASCADE ON UPDATE CASCADE;";
-$DBS->anfrage($sql);
-
-$sql = "ALTER TABLE postfach_{$PERSONID}_postgetaggedentwurf_{$PERSONID}
-ADD CONSTRAINT nachrichtposttaggedentwurf_{$PERSONID} FOREIGN KEY (nachricht) REFERENCES postfach_{$PERSONID}_postentwurf (id) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT tagposttaggedentwurf_{$PERSONID} FOREIGN KEY (tag) REFERENCES postfach_{$PERSONID}_posttags (id) ON DELETE CASCADE ON UPDATE CASCADE;";
-$DBS->anfrage($sql);
-
-$sql = "INSERT INTO postfach_nutzereinstellungen (person, postmail, postalletage, postpapierkorbtage, signatur, emailaktiv, emailadresse, emailname, einganghost, eingangport, eingangnutzer, eingangpasswort, ausganghost, ausgangport, ausgangnutzer, ausgangpasswort) VALUES (?, ['1'], ['365'], ['30'], ['0'], [''], [''], [''], [''], [''], [''], [''], [''], [''], [''], ['']);";
+$sql = "INSERT INTO postfach_nutzereinstellungen (person, postmail, postalletage, postpapierkorbtage, postspeicherplatz, signatur, emailaktiv, emailadresse, emailname, einganghost, eingangport, eingangnutzer, eingangpasswort, ausganghost, ausgangport, ausgangnutzer, ausgangpasswort) VALUES (?, ['1'], ['365'], ['30'], ['100'], ['0'], [''], [''], [''], [''], [''], [''], [''], [''], [''], [''], ['']);";
 $DBS->anfrage($sql, "i", $PERSONID);
-
 
 // Ordner für das Personenpostfach anlegen
 if (is_dir("$ROOT/dateien/personen/$PERSONID/Postfach")) {

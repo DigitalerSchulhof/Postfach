@@ -28,3 +28,9 @@
 10:
   ort: anfragen/schulhof/nutzerkonto/profil/einstellungen/nutzerkonto.php
   beschreibung: Der <b>Speicherplatz (MB)</b> ist ungültig. Er muss zwischen 10 und 5000 betragen.
+11:
+  ort: anfragen/postfach/tags/neu.php
+  beschreibung: Der <b>Titel</b> ist ungültig.
+12:
+  ort: anfragen/postfach/tags/neu.php
+  beschreibung: Die <b>Farbe</b> ist ungültig.

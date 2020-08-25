@@ -1,23 +1,23 @@
 <?php
-$sql = "DROP TABLE postfach_{$PERSONID}_postausgang;";
+$sql = "DROP TABLE postfach_{$PERSONID}_ausgang;";
 $DBS->anfrage($sql);
 
-$sql = "DROP TABLE postfach_{$PERSONID}_posteingang";
+$sql = "DROP TABLE postfach_{$PERSONID}_eingang";
 $DBS->anfrage($sql);
 
-$sql = "DROP TABLE postfach_{$PERSONID}_postentwurf;";
+$sql = "DROP TABLE postfach_{$PERSONID}_entwuerfe;";
 $DBS->anfrage($sql);
 
-$sql = "DROP TABLE postfach_{$PERSONID}_postgetaggedausgang;";
+$sql = "DROP TABLE postfach_{$PERSONID}_getaggedausgang;";
 $DBS->anfrage($sql);
 
-$sql = "DROP TABLE postfach_{$PERSONID}_postgetaggedeingang;";
+$sql = "DROP TABLE postfach_{$PERSONID}_getaggedeingang;";
 $DBS->anfrage($sql);
 
-$sql = "DROP TABLE postfach_{$PERSONID}_postgetaggedentwurf;";
+$sql = "DROP TABLE postfach_{$PERSONID}_getaggedentwuerfe;";
 $DBS->anfrage($sql);
 
-$sql = "DROP TABLE postfach_{$PERSONID}_posttags;";
+$sql = "DROP TABLE postfach_{$PERSONID}_tags;";
 $DBS->anfrage($sql);
 
 

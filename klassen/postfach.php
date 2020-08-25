@@ -30,7 +30,7 @@ class Postfach {
    * @return UI\Balken Balken, der anzeigt, wie voll das Postfach ist
    */
   public function getBelegt() : UI\Balken {
-    global $ROOT;
+    global $ROOT, $DBS;
     // Dateisystem Größe ermitteln
     $info = Kern\Dateisystem::ordnerInfo("$ROOT/dateien/personen/{$this->person}/Postfach");
     $belegt = $info["groesse"];
@@ -44,13 +44,14 @@ class Postfach {
    * @return array Anzahl Nachrichten der einzelnen Bereiche
    */
   public function getStatus() {
+    global $DBS;
     $eingang['-'] = 0;
 		$eingang[1] = 0;
     $zahlen['ein'] = 0;
     $zahlen['aus'] = 0;
     $zahlen['ent'] = 0;
     $zahlen['pap'] = 0;
-    $sql = "SELECT [gelesen], COUNT(gelesen) FROM postfach_{$this->person}_posteingang WHERE papierkorb = {?} GROUP BY gelesen";
+    $sql = "SELECT [gelesen], COUNT(gelesen) FROM postfach_{$this->person}_eingang WHERE papierkorb = {?} GROUP BY gelesen";
     $anfrage = $DBS->anfrage($sql, "s", "-");
     while ($anfrage->werte($status, $anzahl)) {
       $eingang[$status] = $anzahl;
@@ -60,25 +61,25 @@ class Postfach {
       $zahlen['ein'] = $eingang[1]."/".$zahlen['ein'];
     }
 
-    $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_postausgang WHERE papierkorb = {?}";
+    $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_ausgang WHERE papierkorb = {?}";
     $anfrage = $DBS->anfrage($sql, "s", "-");
     $anfrage->werte($zahlen['aus']);
 
-    $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_postentwurf WHERE papierkorb = {?}";
+    $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_entwuerfe WHERE papierkorb = {?}";
     $anfrage = $DBS->anfrage($sql, "s", "-");
     $anfrage->werte($zahlen['ent']);
 
-    $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_posteingang WHERE papierkorb = {?}";
+    $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_eingang WHERE papierkorb = {?}";
     $anfrage = $DBS->anfrage($sql, "s", "1");
     $anfrage->werte($zahl);
     $zahlen['pap'] += $zahl;
 
-    $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_postausgang WHERE papierkorb = {?}";
+    $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_ausgang WHERE papierkorb = {?}";
     $anfrage = $DBS->anfrage($sql, "s", "1");
     $anfrage->werte($zahl);
     $zahlen['pap'] += $zahl;
 
-    $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_postentwurf WHERE papierkorb = {?}";
+    $sql = "SELECT COUNT(*) FROM postfach_{$this->person}_entwuerfe WHERE papierkorb = {?}";
     $anfrage = $DBS->anfrage($sql, "s", "1");
     $anfrage->werte($zahl);
     $zahlen['pap'] += $zahl;
@@ -108,11 +109,74 @@ class Postfach {
     return $formular;
   }
 
-  public function getPosteingang() : string {
-    $spalten = [["{gelesen} AS gelesen", "{beantwortet} AS beantwortet"], ["{nachname} AS nachname", "{vorname} AS vorname", "{titel} AS titel"], ["{betreff} AS betreff"], ["zeit"], ["{archiviert} as archiviert"]];
-    $sql = "SELECT ?? FROM postfach_{$this->person}_posteingang WHERE papierkorb = {'-'}";
-    $tanfrage = new Kern\Tabellenanfrage($sql, $spalten, 1, 25, 4);
-    return "";
+  public function getEingangsfilter() : string {
+    return new Eingangsfilter($this, "dshPostfachEingang", "console.log(1)");
+  }
+
+  /**
+   * Generiert die Tabelle des Aktionsprotokolls für den angegebenen Tag
+   * @param  int       $datum Timestamp des Tages von dem das Aktionsprotokoll stammen soll
+   * @return UI\Tabelle        :)
+   */
+  public function getTags($autoladen = false, $sortSeite = 1, $sortDatenproseite = 25, $sortSpalte = 0, $sortRichtung = "ASC") : UI\Tabelle {
+    global $DBS, $DSH_BENUTZER;
+    if ($this->person != $DSH_BENUTZER->getId()) {
+      throw new \Exception("Unzulässiger Zugriff");
+    }
+
+    $spalten = [["{titel} AS titel"], ["{farbe} AS farbe"], ["id"]];
+    $sql = "SELECT ?? FROM postfach_{$this->person}_tags";
+    $ta = new Kern\Tabellenanfrage($sql, $spalten, $sortSeite, $sortDatenproseite, $sortSpalte, $sortRichtung);
+    $tanfrage = $ta->anfrage($DBS);
+    $anfrage = $tanfrage["Anfrage"];
+
+    $tabelle = new UI\Tabelle("dshPostfachTags", "postfach.tags.laden", new UI\Icon("fas fa-tag"), "Titel", "Farbe");
+    if ($autoladen) {
+      $tabelle->setAutoladen(true);
+    } else {
+      while ($anfrage->werte($titel, $farbe, $id)) {
+        $zeile = new UI\Tabelle\Zeile();
+        $zeile["Titel"] = $titel;
+        $zeile["Farbe"] = new UI\Farbbeispiel($farbe);
+
+        $knopf = UI\MiniIconKnopf::bearbeiten();
+        $knopf ->addFunktion("onclick", "schulhof.postfach.tags.bearbeiten('$id')");
+        $zeile ->addAktion($knopf);
+
+        $knopf = UI\MiniIconKnopf::loeschen();
+        $knopf ->addFunktion("onclick", "schulhof.postfach.tags.loeschen.fragen('$id')");
+        $zeile ->addAktion($knopf);
+
+        $tabelle[] = $zeile;
+      }
+    }
+
+    return $tabelle;
+  }
+
+
+  public function neuerTag() : string {
+    global $DSH_BENUTZER;
+    if ($this->person != $DSH_BENUTZER->getId()) {
+      throw new \Exception("Unzulässiger Zugriff");
+    }
+
+    $fensterid = "dshPostfachNeuerTag";
+
+    $fenstertitel = (new UI\Icon("fas fa-tag"))." Neuen Tag anlegen";
+
+    $formular         = new UI\FormularTabelle();
+
+    $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Titel:"),    new UI\Textfeld("dshPostfachNeuerTagTitel"));
+    $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Farbe:"),    new UI\Farbfeld("dshPostfachNeuerTagFarbe"));
+    $formular[]       = (new UI\Knopf("Neuen Tag anlegen", "Erfolg"))  ->setSubmit(true);
+    $formular         ->addSubmit("postfach.tags.neu.erstellen()");
+    $fensterinhalt    = UI\Zeile::standard($formular);
+
+    $code = new UI\Fenster($fensterid, $fenstertitel, $fensterinhalt, true, true);
+    $code->addFensteraktion(UI\Knopf::schliessen($fensterid));
+
+    return $code;
   }
 
   /**
@@ -121,13 +185,13 @@ class Postfach {
    */
   public function profilTabellen() : array {
     $tabellen = [];
-    $tabellen[] = "postfach_{$this->person}_postausgang";
-    $tabellen[] = "postfach_{$this->person}_posteingang";
-    $tabellen[] = "postfach_{$this->person}_postentwurf";
-    $tabellen[] = "postfach_{$this->person}_postgetaggedausgang";
-    $tabellen[] = "postfach_{$this->person}_postgetaggedeingang";
-    $tabellen[] = "postfach_{$this->person}_postgetaggedentwurf";
-    $tabellen[] = "postfach_{$this->person}_posttags";
+    $tabellen[] = "postfach_{$this->person}_ausgang";
+    $tabellen[] = "postfach_{$this->person}_eingang";
+    $tabellen[] = "postfach_{$this->person}_entwuerfe";
+    $tabellen[] = "postfach_{$this->person}_getaggedausgang";
+    $tabellen[] = "postfach_{$this->person}_getaggedeingang";
+    $tabellen[] = "postfach_{$this->person}_getaggedentwurf";
+    $tabellen[] = "postfach_{$this->person}_tags";
     return $tabellen;
   }
 }
