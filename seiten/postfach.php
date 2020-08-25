@@ -21,7 +21,6 @@ $reiterspalte   = new UI\Spalte("A1", $reiterinhalt);
 $reiterkoerper  = new UI\Reiterkoerper($reiterspalte->addKlasse("dshUiOhnePadding"));
 $reiter[]       = new UI\Reitersegment($reiterkopf, $reiterkoerper);
 
-
 $reiterkopf     = new UI\Reiterkopf("Entwürfe", new UI\Icon("fas fa-drafting-compass"), $anzahlen['ent']);
 $reiterinhalt   = "";
 $reiterspalte   = new UI\Spalte("A1", $reiterinhalt);
@@ -45,10 +44,6 @@ $reiterinhalt  .= new UI\Absatz($knopf);
 $reiterspalte   = new UI\Spalte("A1", $reiterinhalt);
 $reiterkoerper  = new UI\Reiterkoerper($reiterspalte->addKlasse("dshUiOhnePadding"));
 $reiter[]       = new UI\Reitersegment($reiterkopf, $reiterkoerper);
-
-
-
-
 
 $reiterkopf     = new UI\Reiterkopf("Einstellungen", new UI\Icon(UI\Konstanten::EINSTELLUNGEN));
 $reiterinhalt   = $postfach->getPostfacheinstellungen();
