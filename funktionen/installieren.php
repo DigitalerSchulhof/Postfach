@@ -30,10 +30,6 @@ $sql = "ALTER TABLE postfach_nutzereinstellungen
 ADD CONSTRAINT postfachnutzereinstellungen FOREIGN KEY (person) REFERENCES kern_personen (id) ON DELETE CASCADE ON UPDATE CASCADE;";
 $DBS->anfrage($sql);
 
-$sql = "ALTER TABLE personen_signaturen
-ADD CONSTRAINT postfachsignaturenpersonen FOREIGN KEY (person) REFERENCES personen (id) ON DELETE CASCADE ON UPDATE CASCADE;";
-$DBS->anfrage($sql);
-
 // Tabellen für Personen anlegen
 $anfrage = $DBS->anfrage("SELECT id FROM kern_personen");
 while ($anfrage->werte($pid)) {
@@ -159,7 +155,7 @@ while ($anfrage->werte($pid)) {
   ADD CONSTRAINT tagposttaggedentwurf_{$pid} FOREIGN KEY (tag) REFERENCES postfach_{$pid}_posttags (id) ON DELETE CASCADE ON UPDATE CASCADE;";
   $DBS->anfrage($sql);
 
-  $sql = "INSERT INTO postfach_nutzereinstellungen (person, postmail, postalletage, postpapierkorbtage, postspeicherplatz, postsignatur, emailaktiv, emailadresse, emailname, einganghost, eingangport, eingangnutzer, eingangpasswort, ausganghost, ausgangport, ausgangnutzer, ausgangpasswort) VALUES (?, ['1'], ['365'], ['30'], ['100'], ['0'], [''], [''], [''], [''], [''], [''], [''], [''], [''], [''], ['']);";
+  $sql = "INSERT INTO postfach_nutzereinstellungen (person, postmail, postalletage, postpapierkorbtage, postspeicherplatz, signatur, emailaktiv, emailadresse, emailname, einganghost, eingangport, eingangnutzer, eingangpasswort, ausganghost, ausgangport, ausgangnutzer, ausgangpasswort) VALUES (?, ['1'], ['365'], ['30'], ['100'], ['0'], [''], [''], [''], [''], [''], [''], [''], [''], [''], [''], ['']);";
   $DBS->anfrage($sql, "i", $pid);
 
   // Ordner für das Personenpostfach anlegen

@@ -30,7 +30,7 @@ class Postfach {
    * @return UI\Balken Balken, der anzeigt, wie voll das Postfach ist
    */
   public function getBelegt() : UI\Balken {
-    global $ROOT;
+    global $ROOT, $DBS;
     // Dateisystem Größe ermitteln
     $info = Kern\Dateisystem::ordnerInfo("$ROOT/dateien/personen/{$this->person}/Postfach");
     $belegt = $info["groesse"];
@@ -44,6 +44,7 @@ class Postfach {
    * @return array Anzahl Nachrichten der einzelnen Bereiche
    */
   public function getStatus() {
+    global $DBS;
     $eingang['-'] = 0;
 		$eingang[1] = 0;
     $zahlen['ein'] = 0;

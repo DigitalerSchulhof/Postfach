@@ -10,13 +10,13 @@ $anzahlen = $postfach->getStatus();
 
 $reiter = new UI\Reiter("dshPostfach");
 
-$reiterkopf     = new UI\Reiterkopf("Posteingang", new UI\Icon("fas fa-inbox-in"), $anzahlen['ein']);
+$reiterkopf     = new UI\Reiterkopf("Posteingang", new UI\Icon("fas fa-sign-in-alt"), $anzahlen['ein']);
 $reiterinhalt   = $postfach->getPosteingang();
 $reiterspalte   = new UI\Spalte("A1", $reiterinhalt);
 $reiterkoerper  = new UI\Reiterkoerper($reiterspalte->addKlasse("dshUiOhnePadding"));
 $reiter[]       = new UI\Reitersegment($reiterkopf, $reiterkoerper);
 
-$reiterkopf     = new UI\Reiterkopf("Postausgang", new UI\Icon("fas fa-inbox-out"), $anzahlen['aus']);
+$reiterkopf     = new UI\Reiterkopf("Postausgang", new UI\Icon("fas fa-sign-out-alt"), $anzahlen['aus']);
 $reiterinhalt   = "";
 $reiterspalte   = new UI\Spalte("A1", $reiterinhalt);
 $reiterkoerper  = new UI\Reiterkoerper($reiterspalte->addKlasse("dshUiOhnePadding"));
