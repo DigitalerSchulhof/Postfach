@@ -37,9 +37,9 @@ $reiter[]       = new UI\Reitersegment($reiterkopf, $reiterkoerper);
 
 
 $reiterkopf     = new UI\Reiterkopf("Tags", new UI\Icon("fas fa-tags"));
-$reiterinhalt   = $postfach->getTags(true);
+$reiterinhalt   = (new UI\Tabelle("dshPostfachTags", "postfach.tags.suchen", new UI\Icon("fas fa-tag"), "Titel", "Farbe"))->setAutoladen(true);
 $knopf          = new UI\IconKnopf(new UI\Icon(UI\Konstanten::NEU), "Neuen Tag anlegen", "Erfolg");
-$knopf          ->addFunktion("onclick", "postfach.tags.neu.laden()");
+$knopf          ->addFunktion("onclick", "postfach.tags.neu.fenster()");
 $reiterinhalt  .= new UI\Absatz($knopf);
 $reiterspalte   = new UI\Spalte("A1", $reiterinhalt);
 $reiterkoerper  = new UI\Reiterkoerper($reiterspalte->addKlasse("dshUiOhnePadding"));

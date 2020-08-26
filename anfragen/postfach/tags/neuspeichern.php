@@ -11,8 +11,7 @@ if(!UI\Check::istTitel($titel)) {
 if (UI\Check::istHexFarbe($farbe)) {
   $farbe = UI\Generieren::HexZuRgba($farbe);
 }
-
-if(!UI\Check::istFarbe($farbe)) {
+if(!UI\Check::istRgbaFarbe($farbe)) {
   Anfrage::addFehler(12);
 }
 Anfrage::checkFehler();

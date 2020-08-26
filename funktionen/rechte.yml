@@ -9,3 +9,6 @@ personen:
       einstellungen:
         postfach: Einstellungen zum internen Postfach ändern
         speicherplatz: Speicherplatz zuweisen
+technik:
+  speicher:
+    postfach: Speicherlimits der Postfächer einstellen

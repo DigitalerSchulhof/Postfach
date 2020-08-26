@@ -140,11 +140,11 @@ class Postfach {
         $zeile["Farbe"] = new UI\Farbbeispiel($farbe);
 
         $knopf = UI\MiniIconKnopf::bearbeiten();
-        $knopf ->addFunktion("onclick", "schulhof.postfach.tags.bearbeiten('$id')");
+        $knopf ->addFunktion("onclick", "postfach.tags.bearbeiten.laden('$id')");
         $zeile ->addAktion($knopf);
 
         $knopf = UI\MiniIconKnopf::loeschen();
-        $knopf ->addFunktion("onclick", "schulhof.postfach.tags.loeschen.fragen('$id')");
+        $knopf ->addFunktion("onclick", "postfach.tags.loeschen.fragen('$id')");
         $zeile ->addAktion($knopf);
 
         $tabelle[] = $zeile;
@@ -152,30 +152,6 @@ class Postfach {
     }
 
     return $tabelle;
-  }
-
-
-  public function neuerTag() : string {
-    global $DSH_BENUTZER;
-    if ($this->person != $DSH_BENUTZER->getId()) {
-      throw new \Exception("Unzulässiger Zugriff");
-    }
-
-    $fensterid = "dshPostfachNeuerTag";
-
-    $fenstertitel = (new UI\Icon("fas fa-tag"))." Neuen Tag anlegen";
-
-    $formular         = new UI\FormularTabelle();
-
-    $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Titel:"),    new UI\Textfeld("dshPostfachNeuerTagTitel"));
-    $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Farbe:"),    new UI\Farbfeld("dshPostfachNeuerTagFarbe"));
-    $formular[]       = (new UI\Knopf("Neuen Tag anlegen", "Erfolg"))  ->setSubmit(true);
-    $formular         ->addSubmit("postfach.tags.neu.erstellen()");
-    $fensterinhalt    = UI\Zeile::standard($formular);
-
-    $code = new UI\Fenster($fensterid, $fenstertitel, $fensterinhalt);
-
-    return $code;
   }
 
   /**

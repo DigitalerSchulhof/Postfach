@@ -34,3 +34,9 @@
 12:
   ort: anfragen/postfach/tags/neu.php
   beschreibung: Die <b>Farbe</b> ist ungültig.
+13:
+  ort: anfragen/postfach/tags/bearbeiten.php
+  beschreibung: Der <b>Titel</b> ist ungültig.
+14:
+  ort: anfragen/postfach/tags/bearbeiten.php
+  beschreibung: Die <b>Farbe</b> ist ungültig.
