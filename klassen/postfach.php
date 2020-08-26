@@ -173,8 +173,7 @@ class Postfach {
     $formular         ->addSubmit("postfach.tags.neu.erstellen()");
     $fensterinhalt    = UI\Zeile::standard($formular);
 
-    $code = new UI\Fenster($fensterid, $fenstertitel, $fensterinhalt, true, true);
-    $code->addFensteraktion(UI\Knopf::schliessen($fensterid));
+    $code = new UI\Fenster($fensterid, $fenstertitel, $fensterinhalt);
 
     return $code;
   }
