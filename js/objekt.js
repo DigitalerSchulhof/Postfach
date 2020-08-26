@@ -10,9 +10,7 @@ var postfach = {
       erstellen: () => {
         var titel = $("#dshPostfachNeuerTagTitel").getWert();
         var farbe = $("#dshPostfachNeuerTagFarbe").getWert();
-        core.ajax("Postfach", 4, "Neuen Tag erstellen", {titel:titel, farbe:farbe}, null, "dshPostfachNeuerTag").then((r) => {
-          ui.laden.meldung("Postfach", 2, null);
-        });
+        core.ajax("Postfach", 4, "Neuen Tag erstellen", {titel:titel, farbe:farbe}, 2, "dshPostfachTags");
       }
     }
   }
