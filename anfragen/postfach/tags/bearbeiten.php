@@ -1,21 +1,24 @@
 <?php
-Anfrage::post("titel", "farbe");
+Anfrage::post("id", "titel", "farbe");
 
 if(!Kern\Check::angemeldet()) {
   Anfrage::addFehler(-2, true);
 }
+if(!UI\Check::istZahl($id)) {
+  Anfrage::addFehler(-3, true);
+}
 if(!UI\Check::istTitel($titel)) {
-  Anfrage::addFehler(11);
+  Anfrage::addFehler(13);
 }
 
 if (UI\Check::istHexFarbe($farbe)) {
   $farbe = UI\Generieren::HexZuRgba($farbe);
 }
 if(!UI\Check::istRgbaFarbe($farbe)) {
-  Anfrage::addFehler(12);
+  Anfrage::addFehler(14);
 }
 Anfrage::checkFehler();
 
 $pid = $DSH_BENUTZER->getId();
-$id = $DBS->neuerDatensatz("postfach_{$pid}_tags", array("titel" => "[?]", "farbe" => "[?]"), "ss", $titel, $farbe);
+$DBS->anfrage("UPDATE postfach_{$pid}_tags SET titel = [?], farbe = [?] WHERE id = ?", "ssi", $titel, $farbe, $id);
 ?>

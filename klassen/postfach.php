@@ -140,11 +140,11 @@ class Postfach {
         $zeile["Farbe"] = new UI\Farbbeispiel($farbe);
 
         $knopf = UI\MiniIconKnopf::bearbeiten();
-        $knopf ->addFunktion("onclick", "schulhof.postfach.tags.bearbeiten('$id')");
+        $knopf ->addFunktion("onclick", "postfach.tags.bearbeiten.laden('$id')");
         $zeile ->addAktion($knopf);
 
         $knopf = UI\MiniIconKnopf::loeschen();
-        $knopf ->addFunktion("onclick", "schulhof.postfach.tags.loeschen.fragen('$id')");
+        $knopf ->addFunktion("onclick", "postfach.tags.loeschen.fragen('$id')");
         $zeile ->addAktion($knopf);
 
         $tabelle[] = $zeile;
@@ -155,22 +155,39 @@ class Postfach {
   }
 
 
-  public function neuerTag() : string {
+  public function getTag($id = null) : string {
     global $DSH_BENUTZER;
     if ($this->person != $DSH_BENUTZER->getId()) {
       throw new \Exception("Unzulässiger Zugriff");
     }
 
-    $fensterid = "dshPostfachNeuerTag";
-
-    $fenstertitel = (new UI\Icon("fas fa-tag"))." Neuen Tag anlegen";
-
     $formular         = new UI\FormularTabelle();
+    if ($id === null) {
+      $fensterid = "dshPostfachNeuerTag";
+      $fenstertitel = (new UI\Icon("fas fa-tag"))." Neuen Tag anlegen";
+      $formular         ->addSubmit("postfach.tags.neu.erstellen()");
+      $knopf = (new UI\Knopf("Neuen Tag anlegen", "Erfolg"))  ->setSubmit(true);
+    } else {
+      $fensterid = "dshPostfachTag$id";
+      $fenstertitel = (new UI\Icon("fas fa-tag"))." Tag bearbeiten";
+      $formular         ->addSubmit("postfach.tags.bearbeiten.ausfuehren('$id')");
+      $knopf = (new UI\Knopf("Tag bearbeiten", "Erfolg"))  ->setSubmit(true);
+    }
 
-    $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Titel:"),    new UI\Textfeld("dshPostfachNeuerTagTitel"));
-    $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Farbe:"),    new UI\Farbfeld("dshPostfachNeuerTagFarbe"));
-    $formular[]       = (new UI\Knopf("Neuen Tag anlegen", "Erfolg"))  ->setSubmit(true);
-    $formular         ->addSubmit("postfach.tags.neu.erstellen()");
+    $titel = new UI\Textfeld("{$fensterid}Titel");
+    $farbe = new UI\Farbfeld("{$fensterid}Farbe");
+
+    if ($id !== null) {
+      global $DBS;
+      $sql = "SELECT {titel}, {farbe} FROM postfach_{$this->person}_tags WHERE id = ?";
+      $DBS->anfrage($sql, "i", $id)->werte($titelW, $farbeW);
+      $titel->setWert($titelW);
+      $farbe->setWert($farbeW);
+    }
+
+    $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Titel:"),    $titel);
+    $formular[]       = new UI\FormularFeld(new UI\InhaltElement("Farbe:"),    $farbe);
+    $formular[]       = $knopf;
     $fensterinhalt    = UI\Zeile::standard($formular);
 
     $code = new UI\Fenster($fensterid, $fenstertitel, $fensterinhalt, true, true);
