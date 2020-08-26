@@ -33,7 +33,6 @@ function postfachDetails($id = null) : UI\Fenster {
   $fensterinhalt    = UI\Zeile::standard($formular);
 
   $fenster = new UI\Fenster($fensterid, $fenstertitel, $fensterinhalt, true, true);
-  $fenster->addFensteraktion(UI\Knopf::schliessen($fensterid));
   return $fenster;
 }
 ?>

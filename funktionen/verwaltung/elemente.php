@@ -4,7 +4,7 @@ use Kern\Verwaltung\Liste;
 use Kern\Verwaltung\Element;
 use UI\Icon;
 
-$essen    = Liste::addKategorie(new \Kern\Verwaltung\Kategorie("essen", "Essen"));
+$technik    = Liste::addKategorie(new \Kern\Verwaltung\Kategorie("technik", "Technik"));
 
-if($DSH_BENUTZER->hatRecht("lecker") || false)  $essen[] = new Element("Lasagne", "Lasagnegehalt einstellen", new Icon("fas fa-cat"), "Schulhof/Verwaltung/Garfield", true);
+if($DSH_BENUTZER->hatRecht("technik.speicher.postfach") || false)  $essen[] = new Element("Postfach Speicherlimits", "Postfach Speicherlimits einstellen", new Icon("fas fa-mail-bulk"), "Schulhof/Verwaltung/Postfach", true);
 ?>
