@@ -20,5 +20,5 @@ if(!UI\Check::istRgbaFarbe($farbe)) {
 Anfrage::checkFehler();
 
 $pid = $DSH_BENUTZER->getId();
-$DBS->anfrage("UPDATE postfach_{$pid}_tags SET titel = [?], farbe = [?] WHERE id = ?", "ssi", $titel, $farbe, $id);
+$DBS->datensatzBearbeiten("postfach_{$pid}_tags", $id, array("titel" => "[?]", "farbe" => "[?]"), "ss", $titel, $farbe);
 ?>

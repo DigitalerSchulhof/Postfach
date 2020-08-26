@@ -9,5 +9,5 @@ if(!UI\Check::istZahl($id)) {
 }
 
 $pid = $DSH_BENUTZER->getId();
-$DBS->anfrage("DELETE FROM postfach_{$pid}_tags WHERE id = ?", "i", $id);
+$DBS->datensatzLoeschen("postfach_{$pid}_tags", $id);
 ?>
