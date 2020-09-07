@@ -6,13 +6,13 @@ var postfach = {
       farbe: $("#"+id+"Farbe").getWert()
     }),
     neu: {
-      fenster:   () => ui.fenster.laden("Postfach", 3, null, null, null, null),
-      speichern: () => core.ajax("Postfach", 4, "Neuen Tag erstellen", {...postfach.tags.daten("dshPostfachTagNeu")}, 2, "dshPostfachTags").then((r) => {
+      fenster:   _ => ui.fenster.laden("Postfach", 3),
+      speichern: _ => core.ajax("Postfach", 4, "Neuen Tag erstellen", {...postfach.tags.daten("dshPostfachTagNeu")}, 2, "dshPostfachTags").then((r) => {
         ui.fenster.schliessen("dshPostfachTagNeu");
       })
     },
     bearbeiten: {
-      fenster:    (id) => ui.fenster.laden("Postfach", 6, null, {id:id}, null, null),
+      fenster:    (id) => ui.fenster.laden("Postfach", 6, {id:id}),
       speichern: (id) => core.ajax("Postfach", 7, "Tag bearbeiten", {id:id, ...postfach.tags.daten("dshPostfachTag"+id)}, 5, "dshPostfachTags").then((r) => {
         ui.fenster.schliessen("dshPostfachTag"+id);
       })
